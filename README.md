@@ -61,3 +61,53 @@ Here is a example of how your `sharepoint_sources.json` file should be defined w
 ```
 
 On your S3 Bucket, it will be created a folder called __invoices__ and another with the name __receipts__ with all respective files in it.
+
+## Setting CI with GitHub Actions
+
+For you to deploy your code to AWS automatically you need to set up a GitHub Action responsible for it by setting the `main.yml` file. There you can specify which GitHub Action you are going to use for the deployment and also when should it triggered and what to do once happened. 
+
+Check `main.yml` file configured below: 
+
+```
+name: CI
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  lambda-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - run: zip -r lambda.zip .
+      - uses: yvesgurcan/deploy-lambda-function@v0.0.5
+        with:
+          package: lambda.zip
+          function-name: aws-lambda-sharepoint-to-s3
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SECRET_ID: ${{ secrets.AWS_SECRET_ID }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+```
+
+The code above configures to zip all repository files and upload to AWS using the keys added with __GitHub Secrets__ when a __pull request__ against the __main branch__ it is __closed__.
+
+### Considerations
+
+### AWS Lambda Function Environment
+You AWS Lambda Function should have a default role with the right policies for to, not only update the code via GitHub Actions, but also to actually run when developing locally.
+
+Role and permissions:
+<https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html>
+
+Role required policies:
+<https://docs.aws.amazon.com/lambda/latest/dg/API_UpdateFunctionCode.html>
+<https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html>
+
+### Microsoft Sharepoint
+The keys used to access the API where the lambda function will be able to retrieve files are provided with the registration of app to access externally.
+
+Registrating Microsoft Sharepoint App 
+<https://docs.microsoft.com/pt-br/sharepoint/dev/solution-guidance/security-apponly-azureacs>
