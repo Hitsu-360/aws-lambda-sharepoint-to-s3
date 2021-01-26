@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  lambda-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - run: zip -r lambda.zip .
+      - uses: yvesgurcan/deploy-lambda-function@v0.0.5
+        with:
+          package: lambda.zip
+          function-name: aws-lambda-sharepoint-to-s3
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SECRET_ID: ${{ secrets.AWS_SECRET_ID }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
