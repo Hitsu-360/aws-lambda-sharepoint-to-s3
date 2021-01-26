@@ -37,14 +37,14 @@ The `sharepoint_sources.json` file have a custom json structure where the develo
 
 The parameters __site__, __folder__ and __regex__ are __required__. The parameter __skip_lines__ and __sheet__ are option (by default lines are not skipped and the first tab from a Excel file is loaded).
 
-Here is how your `sharepoint_sources.json` should be defined:
+Here is a example of how your `sharepoint_sources.json` file should be defined with ficticional files definition:
 ```
 {
     "sources": {
         "tables": {
             "invoices": {
                 "site": "Invoices",
-                "folder": "Shared Documents/Invoices",
+                "folder": "Shared Documents/All Invoices",
                 "regex": "Invoice_([0-9]{2})-([0-9]{2})-([0-9]{4}).xlsx",
                 "skip_lines": 3,
                 "sheet": "Invoice" 
@@ -59,3 +59,5 @@ Here is how your `sharepoint_sources.json` should be defined:
     }
 }
 ```
+
+On your S3 Bucket, it will be created a folder called __invoices__ and another with the name __receipts__ with all respective files in it.
