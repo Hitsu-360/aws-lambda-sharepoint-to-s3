@@ -11,7 +11,7 @@ Considering you have Python installed in your machine and you are able to use pi
 
 ## Setting .env file
 
-The .env file will contain your environment variables, keys and variables needed to access Microsoft Sharepoint, AWS Lambda and also AWS S3 Bucket.
+The `.env` file will contain your environment variables, keys and variables needed to access Microsoft Sharepoint, AWS Lambda and also AWS S3 Bucket.
 
 Define your keys and variables like the following `.env` content: 
 ```
@@ -29,4 +29,33 @@ AWS_REGION=<aws_region>
 BUCKET=<dev_bucket>
 BUCKET_AWS_ACCESS_KEY_ID=<bucket_aws_access_key_id>
 BUCKET_AWS_SECRET_ACCESS_KEY=<bucket_aws_secret_access_key>
+```
+
+## Setting sharepoint_sources.json file
+
+The `sharepoint_sources.json` file have a custom json structure where the developer can specify multiples sources to retrieve multiple files. In a source you can specify the site, folder, file regex expression, number of lines to skip in the beginning of the files and sheet name, if you want to load a specific sheet from a Excel file.
+
+The parameters __site__, __folder__ and __regex__ are __required__. The parameter __skip_lines__ and __sheet__ are option (by default lines are not skipped and the first tab from a Excel file is loaded).
+
+Here is how your `sharepoint_sources.json` should be defined:
+```
+{
+    "sources": {
+        "tables": {
+            "invoices": {
+                "site": "Invoices",
+                "folder": "Shared Documents/Invoices",
+                "regex": "Invoice_([0-9]{2})-([0-9]{2})-([0-9]{4}).xlsx",
+                "skip_lines": 3,
+                "sheet": "Invoice" 
+            },
+            "receipts": {
+                "site": "Receipts",
+                "folder": "Shared Documents",
+                "regex": "Receipts_([0-9]{4}.csv",
+                "skip_lines": 0
+            }
+        }
+    }
+}
 ```
