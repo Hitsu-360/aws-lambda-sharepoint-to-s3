@@ -1,5 +1,7 @@
 # aws-lambda-sharepoint-to-s3
-AWS Lambda function that consumes from Microsoft Sharepoint and load data to S3 Bucket
+AWS Lambda function that consumes from Microsoft Sharepoint and load data to S3 Bucket. 
+
+This AWS Lambda function is capable of generally retrieve CSVs and Excel files via Microsoft Sharepoint API by specifying sites, folders, regex expressions representing multiple sources.
 
 ## Installing dependencies
 Considering you have Python installed in your machine and you are able to use pip, run the following command:
