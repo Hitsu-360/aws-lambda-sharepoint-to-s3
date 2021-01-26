@@ -100,14 +100,17 @@ The code above configures to zip all repository files and upload to AWS using th
 You AWS Lambda Function should have a default role with the right policies for to, not only update the code via GitHub Actions, but also to actually run when developing locally.
 
 Role and permissions:
+
 <https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html>
 
 Role required policies:
+
 <https://docs.aws.amazon.com/lambda/latest/dg/API_UpdateFunctionCode.html>
 <https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html>
 
 ### Microsoft Sharepoint
 The keys used to access the API where the lambda function will be able to retrieve files are provided with the registration of app to access externally.
 
-Registrating Microsoft Sharepoint App 
+Registrating Microsoft Sharepoint App:
+
 <https://docs.microsoft.com/pt-br/sharepoint/dev/solution-guidance/security-apponly-azureacs>
