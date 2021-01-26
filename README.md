@@ -94,7 +94,7 @@ jobs:
 
 The code above configures to zip all repository files and upload to AWS using the keys added with __GitHub Secrets__ when a __pull request__ against the __main branch__ it is __closed__.
 
-### Considerations
+## Important
 
 ### AWS Lambda Function Environment
 You AWS Lambda Function should have a default role with the right policies for to, not only update the code via GitHub Actions, but also to actually run when developing locally.
